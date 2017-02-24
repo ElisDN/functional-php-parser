@@ -4,6 +4,10 @@ use Symfony\Component\DomCrawler\Crawler;
 
 require __DIR__ . '/vendor/autoload.php';
 
+function first($array) {
+    return reset($array);
+}
+
 function reduce(callable $func, array $array, $initial = null) {
     return array_reduce($array, $func, $initial);
 }
@@ -34,7 +38,7 @@ function clearUrl($url) {
 function getForumMaxPageNumber($forumUrl) {
     echo 'Max page num for ' . clearUrl($forumUrl) . PHP_EOL;
     return max(
-        reset(crawler($forumUrl)
+        first(crawler($forumUrl)
             ->filter('div.action-bar.top .pagination li:nth-last-of-type(2)')
             ->each(function (Crawler $link) {
                 return intval($link->text());

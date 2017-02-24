@@ -4,6 +4,10 @@ use Symfony\Component\DomCrawler\Crawler;
 
 require __DIR__ . '/vendor/autoload.php';
 
+function first($array) {
+    return reset($array);
+}
+
 function normalizeUrl($url) {
     return 'http://yiiframework.ru/forum/'. ltrim($url, './');
 }
@@ -22,7 +26,7 @@ function clearUrl($url) {
 
 function getForumMaxPageNumber($forumUrl) {
     return max(
-        reset(crawler($forumUrl)
+        first(crawler($forumUrl)
             ->filter('div.action-bar.top .pagination li:nth-last-of-type(2)')
             ->each(function (Crawler $link) {
                 return intval($link->text());

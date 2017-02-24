@@ -47,6 +47,10 @@ function parallel_flat_map(callable $func, array $array) {
         parallel_map($func, $array), []);
 }
 
+function first($array) {
+    return reset($array);
+}
+
 function reduce(callable $func, array $array, $initial = null) {
     return array_reduce($array, $func, $initial);
 }
@@ -98,7 +102,7 @@ function createCrawler(callable $getContent, callable $normalizeUrl) {
 function createGetForumMaxPageNumber(callable $crawler) {
     return function ($url) use ($crawler) {
         return max(
-            reset($crawler($url)
+            first($crawler($url)
                 ->filter('div.action-bar.top .pagination li:nth-last-of-type(2)')
                 ->each(function (Crawler $link) {
                     return intval($link->text());
@@ -181,7 +185,7 @@ function squashProfiles(array $total, array $current) {
             'total' => $current['total'],
         ];
     };
-    if ($exists = reset(array_filter($total, $existsFilter))) {
+    if ($exists = first(array_filter($total, $existsFilter))) {
         return array_merge(array_filter($total, $notExistsFilter), [$increase($exists)]);
     } else {
         return array_merge($total, [$create($current)]);

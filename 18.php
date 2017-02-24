@@ -39,6 +39,10 @@ function parallel_map(callable $func, array $items) {
     return $result;
 }
 
+function first($array) {
+    return reset($array);
+}
+
 function reduce(callable $func, array $array, $initial = null) {
     return array_reduce($array, $func, $initial);
 }
@@ -84,7 +88,7 @@ function crawler($url) {
 
 function getForumMaxPageNumber($forumUrl) {
     return max(
-        reset(crawler($forumUrl)
+        first(crawler($forumUrl)
             ->filter('div.action-bar.top .pagination li:nth-last-of-type(2)')
             ->each(function (Crawler $link) {
                 return intval($link->text());
