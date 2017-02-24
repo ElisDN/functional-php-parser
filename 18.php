@@ -89,7 +89,7 @@ function crawler($url) {
 function getForumMaxPageNumber($forumUrl) {
     return max(
         first(crawler($forumUrl)
-            ->filter('div.action-bar.top .pagination li:nth-last-of-type(2)')
+            ->filter('div.action-bar.bar-top .pagination li:nth-last-of-type(2)')
             ->each(function (Crawler $link) {
                 return intval($link->text());
             })),

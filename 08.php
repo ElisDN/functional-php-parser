@@ -23,7 +23,7 @@ function getForumMaxPageNumber($forumUrl) {
     $crawler = new Crawler($html);
     return max(
         first($crawler
-            ->filter('div.action-bar.top .pagination li:nth-last-of-type(2)')
+            ->filter('div.action-bar.bar-top .pagination li:nth-last-of-type(2)')
             ->each(function (Crawler $link) {
                 return intval($link->text());
             })),

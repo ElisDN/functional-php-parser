@@ -24,6 +24,6 @@ print_r($crawler
 echo PHP_EOL;
 
 print_r($crawler
-    ->filter('div.action-bar.top .pagination li:nth-last-of-type(2)')->text());
+    ->filter('div.action-bar.bar-top .pagination li:nth-last-of-type(2)')->text());
 
 echo PHP_EOL;

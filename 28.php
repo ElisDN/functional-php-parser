@@ -91,7 +91,7 @@ function createGetForumMaxPageNumber(callable $crawler) {
     return function ($url) use ($crawler) {
         return max(
             first($crawler($url)
-                ->filter('div.action-bar.top .pagination li:nth-last-of-type(2)')
+                ->filter('div.action-bar.bar-top .pagination li:nth-last-of-type(2)')
                 ->each(function (Crawler $link) {
                     return intval($link->text());
                 })),
