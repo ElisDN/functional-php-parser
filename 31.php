@@ -224,12 +224,20 @@ function createBatchGetTopicPagesProfiles(callable $getTopicPageProfiles) {
 function createParseForumProfiles($squashProfiles, $batchGetTopicPagesProfiles, $getTopicPages, $getForumPageTopics, $getForumPages, $chunkSize) {
     return function ($url) use ($squashProfiles, $batchGetTopicPagesProfiles, $getTopicPages, $getForumPageTopics, $getForumPages, $chunkSize) {
         return
-            reduce($squashProfiles,
-                flat_map($batchGetTopicPagesProfiles,
+            reduce(
+                $squashProfiles,
+                flat_map(
+                    $batchGetTopicPagesProfiles,
                     array_chunk(
-                        flat_map($getTopicPages,
-                            parallel_flat_map($getForumPageTopics,
-                                $getForumPages($url))), $chunkSize)), []);
+                        flat_map(
+                            $getTopicPages,
+                            parallel_flat_map($getForumPageTopics, $getForumPages($url))
+                        ),
+                        $chunkSize
+                    )
+                ),
+                []
+            );
     };
 }
 
